@@ -1,5 +1,5 @@
 server {
-	listen 80;
+	listen ${WEB_PORT};
         server_name ${SERVER_NAME};
 
         root /var/www/app/public;
