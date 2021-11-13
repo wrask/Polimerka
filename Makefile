@@ -1,51 +1,45 @@
 include .env
 export
 
-## Start up local environment
-up:
+up: ## Start up local environment   
 	@echo "starting ..."
 	docker-compose up -d
 
-## Stop up local environment
-down:
+down: ## Stop up local environment
 	@echo "stopping ..."
 	docker-compose down
 
-## Build and start up local environment
-build:
+build: ## Build and start up local environment
 	@echo "building ..."
 	docker-compose up --build -d
 
-
-## Make a controller
-mc:
+mc: ## Make a controller
 	@echo "creating a controller ..."
 	docker exec $$APP_CONTAINER php app/artisan make:controller $(controller_name)
 
-## Start feature tests
-tests:
+mm: ## Make a model
+	@echo "creating a model ..."
+	docker exec $$APP_CONTAINER php app/artisan make:model $(model_name)
+
+tests: ## Start feature tests
 	@echo "running feature tests ..."
 	docker exec app /var/www/app/vendor/phpunit/phpunit/phpunit /var/www/app/tests/Feature
 
-## Start db migrations
-migrate:
+migrate: ## Start db migrations
 	@echo "running db migrations ..."
 	docker exec $$APP_CONTAINER app/artisan migrate
 
-## Enable maintenance mode
-me:
+me: ## Enable maintenance mode
 	@echo "enabling the maintenance mode ..."
 	docker exec $$APP_CONTAINER app/artisan down
 ##	docker exec app app/artisan down --secret="1630542a-246b-4b66-afa1-dd72a4c43515"
 
+md: ## Disable maintenance mode
 
-## Disable maintenance mode
-md:
 	@echo "disabling the maintenance mode ..."
 	docker exec $$APP_CONTAINER app/artisan up
 
-## Composer
-composer:
+composer: ## Composer
 	docker exec $$APP_CONTAINER composer $(composer_command)
 
 help:
